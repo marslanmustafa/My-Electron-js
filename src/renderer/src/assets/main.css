@@ -2,12 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --sidebarOpen: 224px;
-    /* --sidebarClosed: 64px; */
-    --sidebarClosed: 0;
 
+@font-face {
+  font-family: 'Urbanist';
+  src: url('./fonts/Urbanist-VariableFont_wght.ttf') format('truetype'),
+       url('./fonts/Urbanist-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal, italic;
+}
+
+
+@layer base {
+  .dark {
     --text: 0 0% 0%;
     --text-foreground: 0, 0%, 15%;
 
@@ -42,11 +48,7 @@
     --radius: 0.5rem;
   }
 
-  .dark {
-    --sidebarOpen: 224px;
-    /* --sidebarClosed: 64px; */
-    --sidebarClosed: 0;
-
+  :root {
     --text: 0 0% 100%;
     --text-foreground: 0, 0%, 85%;
 
@@ -97,7 +99,7 @@
 
     @apply bg-transparent;
 
-    @apply font-mono antialiased text-white;
+    @apply font-urbanist antialiased text-white;
 
     @apply overflow-x-hidden;
 
@@ -105,5 +107,12 @@
 
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  header{
+    -webkit-app-region: drag;
+  }
+  button{
+    -webkit-app-region: no-drag;
   }
 }

@@ -1,22 +1,21 @@
-import { contextBridge } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
+import { contextBridge, ipcRenderer } from 'electron';
 
 // Custom APIs for renderer
-const api = {}
+const electronAPI = {
+  minimizeApp: () => ipcRenderer.send('minimizeApp'),
+  maximizeApp: () => ipcRenderer.send('maximizeApp'),
+  closeApp: () => ipcRenderer.send('closeApp')
+};
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
 if (process.contextIsolated) {
   try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
+    contextBridge.exposeInMainWorld('electronAPI', electronAPI);
   } catch (error) {
-    console.error(error)
+    console.error('Failed to expose API:', error);
   }
 } else {
-  // @ts-ignore (define in dts)
-  window.electron = electronAPI
-  // @ts-ignore (define in dts)
-  window.api = api
+  (window as any).electronAPI = electronAPI;
 }
