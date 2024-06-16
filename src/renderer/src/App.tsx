@@ -1,39 +1,21 @@
-import Versions from './components/Versions'
-import TopBar from './components/TopBar'
-import electronLogo from './assets/electron.svg'
+import React from 'react'
+import { RootLayout, Sidebar, Content, TopBar } from './components'
 
-function App(): JSX.Element {
-  const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
-  const ipcHandleMini = (): void => window.electron.ipcRenderer.send('minimizeApp')
-
+const App: React.FC = () => {
   return (
     <>
-    <TopBar/>
-      <img alt="logo" className="logo" src={electronLogo} />
-      <div className="creator">Powered by electron-vite</div>
-      <div className="text">
-        Build an Electron app with <span className="react">React</span>
-        &nbsp;and <span className="ts">TypeScript</span>
-      </div>
-      <p className="tip">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
-      <div className="actions">
-        <div className="action">
-          <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">
-            Documentation
-          </a>
-        </div>
-        <div className="action">
-          <a target="_blank" rel="noreferrer" onClick={ipcHandle}>
-            Send IPC
-          </a>
-          <div onClick={ipcHandleMini} className="text-green-500 text-2xl">
-            Minimize
-          </div>
-        </div>
-      </div>
-      <Versions></Versions>
+      <TopBar />
+      <RootLayout>
+        <Sidebar >
+          {/* <ActionButtonsRow className="flex justify-between mt-1" /> */}
+          {/* <NotePreviewList className="mt-3 space-y-1" onSelect={resetScroll} /> */}
+        </Sidebar>
+
+        <Content className="border-l bg-zinc-900/50 border-l-white/20">
+          {/* <FloatingNoteTitle className="pt-2" /> */}
+          {/* <MarkdownEditor /> */}
+        </Content>
+      </RootLayout>
     </>
   )
 }
