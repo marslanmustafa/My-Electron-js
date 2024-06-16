@@ -18,7 +18,6 @@ function createWindow(): void {
     center: true,
     title: 'Arslan App',
     frame: false,
-    // vibrancy: 'under-window',
     visualEffectState: 'active',
     titleBarStyle: 'hidden',
     webPreferences: {
@@ -60,9 +59,26 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
-  // ipc.on('closeApp', () => {
-  //   console.log('clicked')
-  // })
+
+  ipcMain.on('maximizeApp', () =>{
+    console.log("minimize Hurray")
+    if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize();
+    } else {
+      mainWindow.maximize();
+    }
+  })
+
+  ipcMain.on('restoreDownApp', () =>{
+    console.log("Hurray")
+      mainWindow.minimize();
+  })
+
+  ipcMain.on('closeApp', () =>{
+    console.log("Hurray")
+      mainWindow.close();
+  })
+
 }
 
 // This method will be called when Electron has finished
@@ -79,11 +95,8 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // ipcMain.handle('getNotes', (_, ...args: Parameters<GetNotes>) => getNotes(...args))
-  // ipcMain.handle('readNote', (_, ...args: Parameters<ReadNote>) => readNote(...args))
-  // ipcMain.handle('writeNote', (_, ...args: Parameters<WriteNote>) => writeNote(...args))
-  // ipcMain.handle('createNote', (_, ...args: Parameters<CreateNote>) => createNote(...args))
-  // ipcMain.handle('deleteNote', (_, ...args: Parameters<DeleteNote>) => deleteNote(...args))
+  // IPC test
+  ipcMain.on('ping', () => console.log('arslan'))
 
   createWindow()
 

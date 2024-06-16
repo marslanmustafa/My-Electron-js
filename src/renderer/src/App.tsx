@@ -1,12 +1,12 @@
 import React from 'react'
-import { RootLayout, Sidebar, Content, DraggableTopBar } from './components'
+import { RootLayout, Sidebar, Content, TopBar } from './components'
 
 const App: React.FC = () => {
   return (
     <>
-      <DraggableTopBar />
+      <TopBar />
       <RootLayout>
-        <Sidebar className="p-2">
+        <Sidebar >
           {/* <ActionButtonsRow className="flex justify-between mt-1" /> */}
           {/* <NotePreviewList className="mt-3 space-y-1" onSelect={resetScroll} /> */}
         </Sidebar>

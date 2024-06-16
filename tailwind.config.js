@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
-  content: ['./src/renderer/index.html', './src/renderer/src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   prefix: '',
   theme: {
     container: {
@@ -12,9 +12,6 @@ module.exports = {
       }
     },
     extend: {
-      fontFamily: {
-        urbanist: ['Urbanist', 'sans-serif']
-      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
