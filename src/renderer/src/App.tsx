@@ -1,11 +1,14 @@
 import Versions from './components/Versions'
+import TopBar from './components/TopBar'
 import electronLogo from './assets/electron.svg'
 
 function App(): JSX.Element {
   const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
+  const ipcHandleMini = (): void => window.electron.ipcRenderer.send('minimizeApp')
 
   return (
     <>
+    <TopBar/>
       <img alt="logo" className="logo" src={electronLogo} />
       <div className="creator">Powered by electron-vite</div>
       <div className="text">
@@ -25,6 +28,9 @@ function App(): JSX.Element {
           <a target="_blank" rel="noreferrer" onClick={ipcHandle}>
             Send IPC
           </a>
+          <div onClick={ipcHandleMini} className="text-green-500 text-2xl">
+            Minimize
+          </div>
         </div>
       </div>
       <Versions></Versions>

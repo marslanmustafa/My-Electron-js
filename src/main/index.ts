@@ -33,6 +33,26 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  ipcMain.on('maximizeApp', () =>{
+    console.log("minimize Hurray")
+    if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize();
+    } else {
+      mainWindow.maximize();
+    }
+  })
+
+  ipcMain.on('restoreDownApp', () =>{
+    console.log("Hurray")
+      mainWindow.minimize();
+  })
+
+  ipcMain.on('closeApp', () =>{
+    console.log("Hurray")
+      mainWindow.close();
+  })
+
 }
 
 // This method will be called when Electron has finished
@@ -50,7 +70,7 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.on('ping', () => console.log('arslan'))
 
   createWindow()
 
