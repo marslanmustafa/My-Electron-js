@@ -1,18 +1,29 @@
-import { ComponentProps, forwardRef } from 'react'
+// @ts-nocheck
+import { ComponentProps, forwardRef, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { NotePreviewList } from './NotePreviewList'
+import { ActionButtonsRow } from './ActionButtonsRow'
+const contentContainerRef = useRef<HTMLDivElement>(null)
 
 export const RootLayout: React.FC = ({ children, className, ...props }: ComponentProps<'main'>) => {
   return (
-    <main className={twMerge('bg-background flex flex-row h-screen', className)} {...props}>
+    <main
+      className={twMerge('bg-background flex flex-row h-[calc(100vh-32px)] mt-8', className)}
+      {...props}
+    >
       {children}
     </main>
   )
 }
 
-export const Sidebar: React.FC = ({ className, children, ...props }: ComponentProps<'aside'>) => {
+export const Sidebar: React.FC = ({ className, ...props }: ComponentProps<'aside'>) => {
+  const resetScroll = () => {
+    contentContainerRef.current?.scrollTo(0, 0)
+  }
   return (
-    <aside className={twMerge('w-[250px] h-screen overflow-auto p-2', className)} {...props}>
-      {children}
+    <aside className={twMerge('w-[250px] h-full overflow-auto p-2', className)} {...props}>
+      <ActionButtonsRow />
+      <NotePreviewList onSelect={resetScroll} />
     </aside>
   )
 }

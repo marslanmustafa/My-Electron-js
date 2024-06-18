@@ -1,7 +1,10 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { createNote, deleteNote, getNotes, readNote, writeNote } from './lib'
+import { electronApp, is, optimizer } from '@electron-toolkit/utils'
+import { CreateNote, DeleteNote, GetNotes, ReadNote, WriteNote } from '../shared/types'
+import { BrowserWindow, app, ipcMain, shell } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+
+import icon from '../../resources/logo.png?asset'
 
 function createWindow(): void {
   // Create the browser window.
@@ -41,25 +44,24 @@ function createWindow(): void {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 
-  ipcMain.on('maximizeApp', () =>{
-    console.log("minimize Hurray")
+  ipcMain.on('maximizeApp', () => {
+    console.log('minimize Hurray')
     if (mainWindow.isMaximized()) {
-      mainWindow.unmaximize();
+      mainWindow.unmaximize()
     } else {
-      mainWindow.maximize();
+      mainWindow.maximize()
     }
   })
 
-  ipcMain.on('restoreDownApp', () =>{
-    console.log("Hurray")
-      mainWindow.minimize();
+  ipcMain.on('restoreDownApp', () => {
+    console.log('Hurray')
+    mainWindow.minimize()
   })
 
-  ipcMain.on('closeApp', () =>{
-    console.log("Hurray")
-      mainWindow.close();
+  ipcMain.on('closeApp', () => {
+    console.log('Hurray')
+    mainWindow.close()
   })
-
 }
 
 // This method will be called when Electron has finished
@@ -78,6 +80,11 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('arslan'))
+  ipcMain.handle('getNotes', (_, ...args: Parameters<GetNotes>) => getNotes(...args))
+  ipcMain.handle('readNote', (_, ...args: Parameters<ReadNote>) => readNote(...args))
+  ipcMain.handle('writeNote', (_, ...args: Parameters<WriteNote>) => writeNote(...args))
+  ipcMain.handle('createNote', (_, ...args: Parameters<CreateNote>) => createNote(...args))
+  ipcMain.handle('deleteNote', (_, ...args: Parameters<DeleteNote>) => deleteNote(...args))
 
   createWindow()
 
